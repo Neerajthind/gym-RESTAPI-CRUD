@@ -1,5 +1,6 @@
 package com.springboot.gymrestapi.rest;
 
+
 import com.springboot.gymrestapi.entity.Member;
 import com.springboot.gymrestapi.service.MemberService;
 
@@ -7,6 +8,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,11 +27,44 @@ public class MemberRestController {
         this.memberService = theMemberService;
     }
 
-    // lets create an endpoint that returns the list of employees
+    // lets create an endpoint that returns the list of Members (GET)
     @GetMapping("/members")
     public List<Member> findAll(){
         return memberService.findAll();
     }
+
+
+    // lets create an endpoint that reads a single Member (GET)
+    @GetMapping("/members/{memberId}")
+    public Member getMember(@PathVariable int memberId){
+
+        Member theMember = memberService.findById(memberId);
+
+        if(theMember == null){
+            throw new RuntimeException("Error. Employee id not found: "  + memberId);
+        }
+
+        return theMember;
+
+    }
+
+    // now lets create an enpoint that adds a new member (POST)
+    @PutMapping("/members/")
+    public Member addMember(@RequestBody Member theMember){
+
+        // lets set the id to 0 so its up updated but rather its created 
+
+        theMember.setId(0);
+
+        Member savedMember = memberService.save(theMember);
+
+        return savedMember;
+
+    }
+
+
+
+
 
 
 }
