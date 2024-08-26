@@ -9,4 +9,10 @@ import com.springboot.gymrestapi.entity.Member;
 public interface MemberDAO{
 
     List<Member> findAll();
+
+    Member findById(int theId);
+
+    Member save(Member theMember);
+
+    public void deleteById(int theId);
 }
