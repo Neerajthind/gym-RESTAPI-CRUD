@@ -43,7 +43,7 @@ public class MemberRestController {
         Member theMember = memberService.findById(memberId);
 
         if(theMember == null){
-            throw new RuntimeException("Error. Employee id not found: "  + memberId);
+            throw new RuntimeException("Error. Member id not found: "  + memberId);
         }
 
         return theMember;
